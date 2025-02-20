@@ -1,0 +1,63 @@
+# RTOS Configuration
+environment: development
+
+# Scheduler configuration
+scheduler:
+  type: "edf"  # Options: "rate-monotonic" or "edf"
+
+# Base configuration
+tasks:
+  - id: "T1"
+    period: 6
+    executionTime: 2
+    deadline: 6
+  - id: "T2"
+    period: 8
+    executionTime: 2
+    deadline: 8
+  - id: "T3"
+    period: 12
+    executionTime: 3
+    deadline: 12
+
+resources:
+  - id: "RESOURCE_A"
+  - id: "RESOURCE_B"
+
+logging:
+  level: "info"
+  file: "rtos.log"
+
+# Environment-specific overrides
+development:
+  logging:
+    level: "debug"
+    file: "rtos-dev.log"
+
+production:
+  tasks:
+    - id: "T1"
+      period: 5
+      executionTime: 1
+      deadline: 5
+    - id: "T2"
+      period: 7
+      executionTime: 1
+      deadline: 7
+    - id: "T3"
+      period: 10
+      executionTime: 2
+      deadline: 10
+  logging:
+    level: "warn"
+    file: "/var/log/rtos.log"
+
+test:
+  tasks:
+    - id: "T1"
+      period: 3
+      executionTime: 1
+      deadline: 3
+  logging:
+    level: "error"
+    file: "rtos-test.log"

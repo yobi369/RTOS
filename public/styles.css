@@ -1,0 +1,75 @@
+/* Base styles */
+body {
+    background-color: #ffffff;
+    color: #212529;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark theme */
+body.dark-theme {
+    background-color: #1a1a1a;
+    color: #f8f9fa;
+}
+
+/* Card styling */
+.card {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: background-color 0.3s;
+}
+
+.dark-theme .card {
+    background-color: #2d2d2d;
+    border-color: #444;
+}
+
+/* Task and resource items */
+.task-item, .resource-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: #f8f9fa;
+    transition: background-color 0.3s;
+}
+
+.dark-theme .task-item,
+.dark-theme .resource-item {
+    background-color: #3d3d3d;
+}
+
+.task-status {
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.task-missed {
+    color: #dc3545;
+    margin-left: 1rem;
+}
+
+.resource-status {
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.blocked-tasks {
+    margin-top: 0.5rem;
+    padding: 0.25rem;
+    background-color: rgba(255, 193, 7, 0.1);
+    border-radius: 0.25rem;
+}
+
+/* Chart container */
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+}

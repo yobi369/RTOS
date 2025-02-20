@@ -1,0 +1,21 @@
+{
+  "name": "rtos",
+  "version": "1.0.0",
+  "description": "Real-Time Operating System Simulator",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.13.0",
+    "chart.js": "^4.4.7",
+    "bootstrap": "^5.3.3",
+    "d3": "^7.8.5",
+    "bootstrap-icons": "^1.11.3",
+    "animate.css": "^4.1.1",
+    "moment": "^2.29.4",
+    "lodash": "^4.17.21"
+  }
+}
