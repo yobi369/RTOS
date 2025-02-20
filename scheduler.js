@@ -7,8 +7,44 @@ const {
 class RateMonotonicScheduler {
     constructor() {
         this.tasks = [];
+        this.resources = Object.create(null); // Using plain object instead of Map
         this.currentTask = null;
         this.history = [];
+        this.statistics = {
+            totalExecutionTime: 0,
+            totalIdleTime: 0,
+            totalMissedDeadlines: 0
+        };
+    }
+
+    addResource(resourceId) {
+        if (!resourceId || typeof resourceId !== 'string') {
+            throw new ValidationError(
+                'Resource ID must be a non-empty string',
+                { resourceId }
+            );
+        }
+        
+        if (this.resources[resourceId]) {
+            throw new ResourceConflictError(
+                `Resource with ID ${resourceId} already exists`,
+                resourceId,
+                []
+            );
+        }
+        
+        this.resources[resourceId] = {
+            id: resourceId,
+            blockedTasks: []
+        };
+    }
+
+    getResourceStatus() {
+        return Object.values(this.resources).map(resource => ({
+            id: resource.id,
+            status: resource.blockedTasks.length > 0 ? 'Blocked' : 'Available',
+            blockedTasks: [...resource.blockedTasks]
+        }));
     }
 
     addTask(task) {
@@ -129,8 +165,32 @@ class RateMonotonicScheduler {
         return {
             totalTasks: this.tasks.length,
             currentTask: this.currentTask ? this.currentTask.id : null,
-            history: [...this.history]
+            history: [...this.history],
+            resources: this.getResourceStatus()
         };
+    }
+
+    run(duration) {
+        if (typeof duration !== 'number' || duration <= 0) {
+            throw new ValidationError(
+                'Duration must be a positive number',
+                { duration }
+            );
+        }
+
+        for (let time = 0; time < duration; time++) {
+            const task = this.schedule(time);
+            if (task) {
+                try {
+                    task.execute(time);
+                    if (task.isCompleted()) {
+                        task.reset();
+                    }
+                } catch (error) {
+                    console.error(`Error executing task ${task.id} at time ${time}:`, error);
+                }
+            }
+        }
     }
 }
 
